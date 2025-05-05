@@ -6,16 +6,16 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:27 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/04 11:30:22 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:06:56 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int get_rgba(int r, int g, int b, int a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
-}
+// static int get_rgba(int r, int g, int b, int a)
+// {
+//     return (r << 24 | g << 16 | b << 8 | a);
+// }
 
 static void ft_error(void)
 {
@@ -54,49 +54,87 @@ static int mandelbrot(complex_t c)
 	return (i);
 }
 
-static int julia(complex_t c)
-{
-	complex_t	z = {0, 0};
-	int			i;
-	float		temp_re;
+// static int julia(complex_t c)
+// {
+// 	complex_t	z = {0, 0};
+// 	int			i;
+// 	float		temp_re;
 
-	i = 0;
-	while (z.re * z.re + z.im * z.im <= 4 && i < MAX_ITER)
-	{
-		temp_re = z.re * z.re - z.im * z.im + c.re;
-		z.im = 2 * z.re * z.im + c.im;
-		z.re = temp_re;
-		i++;
-	}
-	return (i);
+// 	i = 0;
+// 	while (z.re * z.re + z.im * z.im <= 4 && i < MAX_ITER)
+// 	{
+// 		temp_re = z.re * z.re - z.im * z.im + c.re;
+// 		z.im = 2 * z.re * z.im + c.im;
+// 		z.re = temp_re;
+// 		i++;
+// 	}
+// 	return (i);
+// }
+
+static int get_color(int iters) {
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+
+    if (iters == 100)
+        return 0x000000FF;
+
+    r = iters * 2;
+    g = iters * 3;
+    b = 255 - iters * 2;
+
+	return (r << 24 | g << 16 | b << 8 | 255);
 }
 
 static void draw_fractal(mlx_image_t *img, camera_t *view)
 {
-	complex_t c;
-	int iters;
+	complex_t	c;
+	int			iters;
+	int			color;
+	int			x;
+	int			y;
 
-	for (int y = 0; y < HEIGHT; y++)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		for (int x = 0; x < WIDTH; x++)
+		x = 0;
+		while (x < WIDTH)
 		{
 			c = pixel_to_complex(x, y, view);
 			iters = mandelbrot(c);
-			// TODO int color = get_color(iters);
-			//mlx_put_pixel(img, x, y, color);
+			color = get_color(iters);
+			mlx_put_pixel(img, x, y, color);
+			x++;
 		}
+		y++;
 	}
+}
+
+static void scroll_handler(double xdelta, double ydelta, void* param) {
+	(void) xdelta;
+    camera_t* view = (camera_t*) param;
+
+    if (ydelta > 0)
+        view->zoom *= 1.1;
+    else if (ydelta < 0)
+        view->zoom /= 1.1;
 }
 
 int	main(void)
 {
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Fractol", false);
+	camera_t view;
+	view.x_offset = 0;
+	view.y_offset = 0;
+	view.zoom = 500;
+	
 	if (!mlx)
 		ft_error();
 	mlx_image_t* img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();
-	// draw_fractal(img);
+	draw_fractal(img, &view);
+	mlx_scroll_hook(mlx, scroll_handler, (void *) &view);
 	mlx_loop(mlx);
 	mlx_is_key_down(mlx, MLX_KEY_ESCAPE);
 	mlx_terminate(mlx);
