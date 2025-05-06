@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:00:22 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/06 11:39:05 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:12:12 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ typedef struct color_s
 
 typedef struct complex_s
 {
-	double	re;
-	double	im;
+	float	re;
+	float	im;
 }	complex_t;
 
 typedef struct camera_s {
-	mlx_t	*context;
+	mlx_t		*context;
 	mlx_image_t	*context_img;
-	double	zoom;
-	double	x_offset;
-	double	y_offset;
+	float		zoom;
+	float		x_offset;
+	float		y_offset;
 } camera_t;
 
 #endif

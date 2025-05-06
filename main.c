@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:27 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/06 12:29:24 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:15:20 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	get_color(int iters) {
 	unsigned char	g;
 	unsigned char	b;
 
-    if (iters == 100)
+    if (iters == MAX_ITER)
         return 0x000000FF;
     r = iters * 2;
     g = iters * 3;
@@ -91,11 +91,13 @@ static void	draw_fractal(mlx_image_t *img, camera_t *view)
 	int32_t		iters;
 	int32_t		color;
 	int32_t		index;
+	int32_t		area;
 	int			x;
 	int			y;
 
 	index = 0;
-	while (index < WIDTH * HEIGHT)
+	area = WIDTH * HEIGHT;
+	while (index < area)
 	{
 		x = index % WIDTH;
 		y = index / WIDTH;
@@ -130,6 +132,19 @@ static void	scroll_handler(double xdelta, double ydelta, void *param) {
 	draw_fractal(view->context_img, view);
 }
 
+static void	key_handler(mlx_key_data_t keydata, void *param)
+{
+	camera_t	*view;
+
+	view = (camera_t *)param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
+	{
+		mlx_delete_image(view->context, view->context_img);
+		mlx_terminate(view->context);
+		exit(EXIT_SUCCESS);
+	}
+}
+
 int	main(void)
 {
 	camera_t view;
@@ -145,12 +160,7 @@ int	main(void)
 		ft_error();
 	draw_fractal(view.context_img, &view);
 	mlx_scroll_hook(view.context, scroll_handler, (void *) &view);
-	if (mlx_is_key_down(view.context, MLX_KEY_ESCAPE))
-	{
-		mlx_delete_image(view.context, view.context_img);
-		mlx_terminate(view.context);
-		exit (EXIT_SUCCESS);
-	}
+	mlx_key_hook(view.context, key_handler, (void *)&view);
 	mlx_loop(view.context);
 	mlx_terminate(view.context);
 	return (EXIT_SUCCESS);
