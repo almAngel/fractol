@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:27 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/06 11:31:15 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:29:24 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,21 @@ static int	get_color(int iters) {
 static void	draw_fractal(mlx_image_t *img, camera_t *view)
 {
 	complex_t	c;
-	int			iters;
-	int			color;
-	int			index;
+	int32_t		iters;
+	int32_t		color;
+	int32_t		index;
 	int			x;
 	int			y;
 
 	index = 0;
 	while (index < WIDTH * HEIGHT)
 	{
-
 		x = index % WIDTH;
 		y = index / WIDTH;
 		c = pixel_to_complex(x, y, view);
 		iters = mandelbrot(c);
 		color = get_color(iters);
-		((int *)img->pixels)[index] = color;
+		mlx_put_pixel(img, x, y, color);
 		index++;
 	}
 }
@@ -112,8 +111,8 @@ static void	scroll_handler(double xdelta, double ydelta, void *param) {
 	camera_t*	view;
 	complex_t	before;
 	complex_t	after;
-	int			mouse_x;
-	int			mouse_y;
+	int32_t		mouse_x;
+	int32_t		mouse_y;
 	
 	mouse_x = 0;
 	mouse_y = 0;

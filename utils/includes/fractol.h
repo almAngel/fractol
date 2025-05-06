@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:00:22 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/06 10:45:47 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:39:05 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <math.h>
 
 # define WIDTH 1280
-# define HEIGHT 720
+# define HEIGHT 1280
 # define MAX_ITER 100
 
 typedef struct color_s
@@ -36,11 +36,6 @@ typedef struct complex_s
 	double	re;
 	double	im;
 }	complex_t;
-
-typedef struct divalue
-{
-
-}	pixel_t;
 
 typedef struct camera_s {
 	mlx_t	*context;
