@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:54 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/15 11:48:12 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:09:44 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	initialize_for_mandelbrot(t_program *program)
 	program->c = initialize_complex(0, 0);
 }
 
-int	mandelbrot(t_complex c, t_complex z)
+int	mandelbrot(t_complex z, t_complex c)
 {
 	int			i;
 	float		temp_re;
@@ -49,11 +49,10 @@ void	draw_mandelbrot(t_program *program)
 	{
 		x = index % WIDTH;
 		y = index / WIDTH;
-		iters = program->algorithm(pixel_to_complex(x, y, \
-			program->main_camera), *program->c);
-		color = get_color(iters);
+		iters = program->algorithm(*program->c, pixel_to_complex(x, y, \
+			program->main_camera));
+		color = get_color(iters, 0);
 		mlx_put_pixel(program->main_camera->viewport, x, y, color);
 		index++;
 	}
-	ft_putendl_fd("> Mandelbrot fractal drawn", 1);
 }

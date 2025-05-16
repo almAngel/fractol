@@ -6,7 +6,7 @@
 #    By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 15:24:03 by angellop          #+#    #+#              #
-#    Updated: 2025/05/15 11:49:50 by angellop         ###   ########.fr        #
+#    Updated: 2025/05/16 11:39:40 by angellop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRC = main.c \
 	  julia.c \
 	  burning_ship.c \
 	  utils.c \
-	  prerequisites.c
+	  prerequisites.c \
+	  controls.c \
+	  colors.c
 
 # Archivos objeto de los programas
 OBJ = $(SRC:.c=.o)

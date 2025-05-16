@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:43:30 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/15 11:44:51 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:25:06 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,22 @@ char	*join_args(int i, int ac, char **av)
 
 t_complex	*args_to_complex(char *args_unified)
 {
+	int			i;
 	t_complex	*c;
 	char		**args;
 
+	i = 0;
 	c = malloc(sizeof(t_complex));
 	if (!c)
 		return (0);
 	args = ft_split(args_unified, ' ');
+	if (!args)
+		return (0);
 	c->re = ft_atof(args[0]);
-	c->im = ft_atof(args[1]);
+	c->im = -ft_atof(args[1]);
+	while (args[i])
+		free(args[i++]);
+	free(args);
 	return (c);
 }
 
@@ -72,7 +79,7 @@ int	count_args(char *args)
 	return (count);
 }
 
-t_complex	*initialize_complex(float re, float im)
+t_complex	*initialize_complex(double re, double im)
 {
 	t_complex	*ni;
 

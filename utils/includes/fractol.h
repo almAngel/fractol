@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:00:22 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/15 11:47:36 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:16:14 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 # define HEIGHT 720
 # define MAX_ITER 100
 
-typedef struct program_s	t_program;
-typedef struct camera_s		t_camera;
+typedef struct s_program	t_program;
+typedef struct s_camera		t_camera;
 
-typedef struct color_s
+typedef struct s_color
 {
 	int	r;
 	int	g;
@@ -36,13 +36,13 @@ typedef struct color_s
 	int	a;
 }	t_color;
 
-typedef struct complex_s
+typedef struct s_complex
 {
 	double	re;
 	double	im;
 }	t_complex;
 
-typedef struct camera_s
+typedef struct s_camera
 {
 	t_program	*parent;
 	mlx_image_t	*viewport;
@@ -54,7 +54,7 @@ typedef struct camera_s
 	double		zoom;
 }	t_camera;
 
-typedef struct program_s
+typedef struct s_program
 {
 	mlx_t		*context;
 	int			(*algorithm)(t_complex z, t_complex c);
@@ -65,8 +65,6 @@ typedef struct program_s
 
 t_complex	pixel_to_complex(int x, int y, t_camera *view);
 double		ft_atof(const char *str);
-int			get_color(int iters);
-void		t_complexo_pixel(t_camera *view, t_complex c, int *x, int *y);
 int			julia(t_complex c, t_complex z);
 int			mandelbrot(t_complex c, t_complex z);
 void		draw_julia(t_program *program);
@@ -77,10 +75,12 @@ void		initialize_for_mandelbrot(t_program *program);
 char		*join_args(int i, int ac, char **av);
 int			count_args(char *args);
 t_complex	*args_to_complex(char *args_unified);
-t_complex	*initialize_complex(float re, float im);
+t_complex	*initialize_complex(double re, double im);
 void		ft_abort(t_program *program, char *msg);
+void		attach_controls(t_program *program);
+void		initialize_for_burning_ship(t_program *program);
+uint32_t	get_color(int iters, int palette_id);
 
-
-
+// void		scroll_handler(double xdelta, double ydelta, void *param);
 
 #endif
