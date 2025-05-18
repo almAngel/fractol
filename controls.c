@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 08:18:41 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/16 11:20:22 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/18 08:59:02 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	free_resources(void *param)
 	t_program	*program;
 
 	program = (t_program *) param;
+	free(program->c);
+	free(program->z);
 	ft_abort(program, "");
 }
 
@@ -63,7 +65,9 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 		cam->x_offset -= move_step;
 	else if (keydata.key == MLX_KEY_RIGHT)
 		cam->x_offset += move_step;
-	else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
+	else if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
+		program->palette_id = (program->palette_id + 1) % N_PALETTES;
+	else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		free_resources(program);
 	else
 		return ;

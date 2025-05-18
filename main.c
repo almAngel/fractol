@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:27 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/16 12:14:23 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/18 09:06:55 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ void	ft_abort(t_program *program, char *msg)
 {
 	if (program)
 	{
-		if (program->c)
-			free(program->c);
-		if (program->z)
-			free(program->z);
 		mlx_delete_image(program->context, program->main_camera->viewport);
 		if (program->main_camera)
 			free(program->main_camera);
@@ -58,8 +54,6 @@ static t_program	*init(void)
 		ft_abort(NULL, "");
 	program->context = mlx_init(WIDTH, HEIGHT, TITLE, false);
 	program->main_camera = create_main_camera(program, 0, 0, 500);
-	program->c = initialize_complex(0, 0);
-	program->z = initialize_complex(0, 0);
 	if (!program->context)
 		ft_abort(program, "");
 	if (!program->main_camera->viewport

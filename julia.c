@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:50 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/16 12:09:41 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/18 08:50:53 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	initialize_for_julia(t_program *program, int ac, char **av, int i)
 	}
 	program->algorithm = julia;
 	program->main_camera->draw = draw_julia;
-	free(program->c);
 	program->c = args_to_complex(args);
+	program->z = initialize_complex(0, 0);
+	program->palette_id = 1;
 	free(args);
 }
 
@@ -69,7 +70,7 @@ void	draw_julia(t_program *program)
 		y = index / WIDTH;
 		iters = program->algorithm(pixel_to_complex(x, \
 			y, program->main_camera), *program->c);
-		color = get_color(iters, 1);
+		color = get_color(iters, program->palette_id);
 		mlx_put_pixel(program->main_camera->viewport, x, y, color);
 		index++;
 	}

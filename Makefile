@@ -6,7 +6,7 @@
 #    By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 15:24:03 by angellop          #+#    #+#              #
-#    Updated: 2025/05/16 11:39:40 by angellop         ###   ########.fr        #
+#    Updated: 2025/05/18 08:53:30 by angellop         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = fractol
 
 # Compilador y flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast
+CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast -g
 
 # Directorios
 LIBFT_DIR = ./utils

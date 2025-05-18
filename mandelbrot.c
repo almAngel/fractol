@@ -6,7 +6,7 @@
 /*   By: angellop <angellop@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:54:54 by angellop          #+#    #+#             */
-/*   Updated: 2025/05/16 12:09:44 by angellop         ###   ########.fr       */
+/*   Updated: 2025/05/18 08:02:50 by angellop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	initialize_for_mandelbrot(t_program *program)
 	program->main_camera->draw = draw_mandelbrot;
 	program->z = initialize_complex(0, 0);
 	program->c = initialize_complex(0, 0);
+	program->palette_id = 0;
 }
 
 int	mandelbrot(t_complex z, t_complex c)
@@ -51,7 +52,7 @@ void	draw_mandelbrot(t_program *program)
 		y = index / WIDTH;
 		iters = program->algorithm(*program->c, pixel_to_complex(x, y, \
 			program->main_camera));
-		color = get_color(iters, 0);
+		color = get_color(iters, program->palette_id);
 		mlx_put_pixel(program->main_camera->viewport, x, y, color);
 		index++;
 	}
